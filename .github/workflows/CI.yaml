@@ -78,6 +78,13 @@ jobs:
         env:
           CYPRESS_baseUrl: http://localhost:5173 # Replace with your actual base URL if different
 
+      - name: Upload Cypress screenshots
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
       - name: Tear down Docker Compose services
         working-directory: backend
         run: docker-compose down
