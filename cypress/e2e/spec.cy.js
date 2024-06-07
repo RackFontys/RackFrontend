@@ -147,3 +147,5 @@ describe('Create user and check messages', () => {
         });
   })
 })
+
+Cypress.config('defaultCommandTimeout', 1000); // 1 seconds
