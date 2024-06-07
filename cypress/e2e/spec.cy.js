@@ -65,10 +65,11 @@ describe('Get page and send message', () => {
     cy.get('form').submit()
 
     cy.url().should('include', '/');
-    cy.contains('Chat').click()
-    cy.url().should('include', '/chat')
 
     cy.reload()
+    
+    cy.contains('Chat').click()
+    cy.url().should('include', '/chat')
 
     cy.get('div.list-group-item')
         .contains('User 10').click()
@@ -126,6 +127,8 @@ describe('Create user and check messages', () => {
     });
 
     cy.url().should('include', '/');
+
+    cy.reload()
 
     cy.intercept('GET', '/Message?userId=10').as('getMessage');
 
