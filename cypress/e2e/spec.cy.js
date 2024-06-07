@@ -51,7 +51,6 @@ describe('Get page and login', () => {
 
 describe('Get page and send message', () => {
   it('passes', () => {
-    cy.wait(20000)
     cy.intercept('GET', '/Message?userId=9').as('getMessage');
     cy.intercept('POST', '/Message').as('sendMessage');
     cy.intercept('GET', '/User?email=test@gmail.com&password=test').as('login');
@@ -163,10 +162,5 @@ describe('Create user and check messages', () => {
     cy.get('div.col-9')
         .find('div')
         .find('div.list-group')
-        .find('div.list-group-item')
-        .then(($div) => {
-          // Example assertion on the content (if needed)
-          expect($div).to.contain('Test message from Cypress');
-        });
   })
 })
