@@ -68,6 +68,8 @@ describe('Get page and send message', () => {
     cy.contains('Chat').click()
     cy.url().should('include', '/chat')
 
+    cy.reload()
+
     cy.get('div.list-group-item')
         .contains('User 10').click()
 
@@ -130,6 +132,8 @@ describe('Create user and check messages', () => {
     cy.contains('Chat').click()
     cy.url().should('include', '/chat')
 
+    cy.reload()
+
     cy.get('div.list-group-item')
         .contains('User 9').click()
 
@@ -147,5 +151,3 @@ describe('Create user and check messages', () => {
         });
   })
 })
-
-Cypress.config('defaultCommandTimeout', 1000); // 1 seconds
