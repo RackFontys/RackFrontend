@@ -42,7 +42,13 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: 1
 
       - name: Wait for backend to be ready
-        run: ./scripts/wait-for-it.sh localhost:5283 --timeout=60
+        run: |
+          sudo apt-get install -y netcat
+          while ! nc -z localhost 5283; do
+            echo "Waiting for backend to be ready..."
+            sleep 1
+          done
+          echo "Backend is ready"
 
       - name: Install frontend dependencies
         run: npm install
