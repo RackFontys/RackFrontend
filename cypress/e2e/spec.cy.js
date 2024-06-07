@@ -1,3 +1,5 @@
+import VueJwtDecode from "vue-jwt-decode";
+
 describe('Get page and register', () => {
   it('passes', () => {
     cy.intercept('POST', '/User').as('register');
@@ -68,8 +70,8 @@ describe('Get page and send message', () => {
     cy.wait('@login').then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
       const res = interception.response.body;
-      localStorage.setItem('jwt', res.data);
-      const decodedJWT = Cypress.env('jwtDecode')(res.data);
+      localStorage.setItem('jwt', res);
+      const decodedJWT = VueJwtDecode.decode(res);
       localStorage.setItem('userName', decodedJWT.userName);
       localStorage.setItem('userId', decodedJWT.userId);
     });
@@ -133,8 +135,8 @@ describe('Create user and check messages', () => {
     cy.wait('@login').then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
       const res = interception.response.body;
-      localStorage.setItem('jwt', res.data);
-      const decodedJWT = Cypress.env('jwtDecode')(res.data);
+      localStorage.setItem('jwt', res);
+      const decodedJWT = VueJwtDecode.decode(res);
       localStorage.setItem('userName', decodedJWT.userName);
       localStorage.setItem('userId', decodedJWT.userId);
     });

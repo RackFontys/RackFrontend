@@ -70,6 +70,9 @@ jobs:
           done
           echo "Frontend is ready"
 
+      - name: Install packages for Cypress
+        run: npm install vue-jwt-decode
+
       - name: Install Cypress
         run: npm install cypress --save-dev
 
