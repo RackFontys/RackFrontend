@@ -60,7 +60,7 @@ jobs:
         run: npm install cypress --save-dev
 
       - name: Run Cypress tests
-        run: npx run cy:run
+        run: npm run cy:run
         env:
           CYPRESS_baseUrl: http://localhost:5173 # Replace with your actual base URL if different
 
