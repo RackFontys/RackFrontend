@@ -56,8 +56,19 @@ jobs:
       - name: Build frontend project
         run: npm run build
 
-      - name: run frontend project
-        run: npm run dev
+      - name: Start frontend server
+        run: npm run dev &
+        env:
+          VITE_PORT: 5173
+
+      - name: Wait for frontend to be ready
+        run: |
+          sudo apt-get install -y netcat
+          while ! nc -z localhost 5173; do
+            echo "Waiting for frontend to be ready..."
+            sleep 1
+          done
+          echo "Frontend is ready"
 
       - name: Install Cypress
         run: npm install cypress --save-dev
