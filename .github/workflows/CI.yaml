@@ -85,6 +85,9 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
 
+      - name: Print API logs
+        run: docker-compose logs api
+
       - name: Tear down Docker Compose services
         working-directory: backend
         run: docker-compose down
