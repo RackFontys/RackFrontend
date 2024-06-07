@@ -51,6 +51,7 @@ describe('Get page and send message', () => {
   it('passes', () => {
     cy.intercept('GET', '/Message?userId=9').as('getMessage');
     cy.intercept('POST', '/Message').as('sendMessage');
+    cy.intercept('GET', '/User?email=test@gmail.com&password=test').as('login');
 
     cy.visit('/#')
     cy.contains('Welcome')
@@ -64,10 +65,17 @@ describe('Get page and send message', () => {
     cy.get('input[name="password"]').type('test')
     cy.get('form').submit()
 
+    cy.wait('@login').then((interception) => {
+      expect(interception.response.statusCode).to.equal(200);
+      const res = interception.response.body;
+      localStorage.setItem('jwt', res.data);
+      const decodedJWT = Cypress.env('jwtDecode')(res.data);
+      localStorage.setItem('userName', decodedJWT.userName);
+      localStorage.setItem('userId', decodedJWT.userId);
+    });
+
     cy.url().should('include', '/');
 
-    cy.reload()
-    
     cy.contains('Chat').click()
     cy.url().should('include', '/chat')
 
@@ -124,6 +132,11 @@ describe('Create user and check messages', () => {
 
     cy.wait('@login').then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
+      const res = interception.response.body;
+      localStorage.setItem('jwt', res.data);
+      const decodedJWT = Cypress.env('jwtDecode')(res.data);
+      localStorage.setItem('userName', decodedJWT.userName);
+      localStorage.setItem('userId', decodedJWT.userId);
     });
 
     cy.url().should('include', '/');
