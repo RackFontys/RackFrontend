@@ -51,6 +51,7 @@ describe('Get page and login', () => {
 
 describe('Get page and send message', () => {
   it('passes', () => {
+    cy.wait(20000)
     cy.intercept('GET', '/Message?userId=9').as('getMessage');
     cy.intercept('POST', '/Message').as('sendMessage');
     cy.intercept('GET', '/User?email=test@gmail.com&password=test').as('login');
