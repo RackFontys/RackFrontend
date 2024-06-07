@@ -82,6 +82,7 @@ jobs:
           CYPRESS_baseUrl: http://localhost:5173 # Replace with your actual base URL if different
 
       - name: Print API logs
+        working-directory: backend
         run: docker-compose logs
 
       - name: Upload Cypress screenshots
