@@ -13,6 +13,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      ISSUER_IP: ${{ secrets.ISSUER_IP }}
+      AUDIENCE_IP: ${{ secrets.AUDIENCE_IP }}
+      JWT_KEY: ${{ secrets.JWT_KEY }}
+      RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
+      RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+      POSTGRES_USERNAME: ${{ secrets.POSTGRES_USERNAME }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      OCELLOT_USER_SERVICE: ${{ secrets.OCELLOT_USER_SERVICE }}
+      OCELLOT_MESSAGE_SERVICE: ${{ secrets.OCELLOT_MESSAGE_SERVICE }}
+      OCELLOT_DEFAULT_ADDRESS: ${{ secrets.OCELLOT_DEFAULT_ADDRESS }}
+
     steps:
       - name: Checkout Vue repository
         uses: actions/checkout@v4
@@ -31,6 +43,12 @@ jobs:
       - name: Set up Docker Compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x ./RackApi/createAppsettings.sh
+          chmod +x ./RackApi.Chat/create_appsettings.sh
+          chmod +x ./RackApi.User/create_appsettings.sh
+          ./RackApi/createAppsettings.sh
+          ./RackApi.Chat/create_appsettings.sh
+          ./RackApi.User/create_appsettings.sh
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
